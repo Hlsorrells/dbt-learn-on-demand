@@ -1,5 +1,10 @@
+/* Initial model to bring customer and order data into single table.
+    This will be decomposed into modular staging tables in next steps. */
+
+/* Configure the model to be created as a persistent table */
 {{ config ( materialized="table" ) }}
 
+/* Customer CTE to reshape customer data */
 with customers as (
 
     select
@@ -11,6 +16,7 @@ with customers as (
 
 ),
 
+/* Orders CTE to reshape order data */
 orders as (
 
     select
@@ -23,6 +29,7 @@ orders as (
 
 ),
 
+/* Aggregate order data according to business logic */
 customer_orders as (
 
     select
@@ -38,7 +45,7 @@ customer_orders as (
 
 ),
 
-
+/* Joined customer and order data for final data artifact */
 final as (
 
     select
