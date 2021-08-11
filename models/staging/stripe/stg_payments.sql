@@ -5,8 +5,8 @@ with payments as (
         orderid as order_id,
         paymentmethod as pymt_method,
         status,
-        amount as pymt_amt,
-        created as pymt_date
+        amount / 100 as amount,
+        created as created_at
 
     from raw.stripe.payment
 )
