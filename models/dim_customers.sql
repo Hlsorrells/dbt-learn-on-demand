@@ -1,31 +1,17 @@
-/* Initial model to bring customer and order data into single table.
-    This will be decomposed into modular staging tables in next steps. */
-
+/* Modular version */
 /* Configure the model to be created as a persistent table */
 {{ config ( materialized="table" ) }}
 
-/* Customer CTE to reshape customer data */
+/* Bring in the modular staging tables */
 with customers as (
 
-    select
-        id as customer_id,
-        first_name,
-        last_name
-
-    from raw.jaffle_shop.customers
+    select * from {{ ref('stg_customers')}}
 
 ),
 
-/* Orders CTE to reshape order data */
 orders as (
 
-    select
-        id as order_id,
-        user_id as customer_id,
-        order_date,
-        status
-
-    from raw.jaffle_shop.orders
+    select * from {{ ref('stg_orders') }}
 
 ),
 
