@@ -1,6 +1,4 @@
 /* Modular version */
-/* Configure the model to be created as a persistent table */
-{{ config ( materialized="table" ) }}
 
 /* Bring in the modular staging tables */
 with customers as (
